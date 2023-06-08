@@ -14,13 +14,14 @@ import Icon from "react-native-vector-icons/AntDesign";
 
 export const RegistrationScreen = () => {
   return (
-    <ImageBackground source={PhotoBG} style={styles.imageBG}>
-      <View style={styles.containerForm}>
-        <Image style={styles.image}></Image>
-        <Icon style={styles.icon} name="pluscircleo" />
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"}
-        >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ImageBackground source={PhotoBG} style={styles.imageBG}>
+        <View style={styles.containerForm}>
+          <Image style={styles.image}></Image>
+          <Icon style={styles.icon} name="pluscircleo" />
           <Text style={styles.textHeader}>Реєстрація</Text>
           <TextInput style={styles.input} placeholder="Логін"></TextInput>
           <TextInput
@@ -36,17 +37,17 @@ export const RegistrationScreen = () => {
               <Text style={styles.textInput}>Показати</Text>
             </Pressable>
           </View>
-        </KeyboardAvoidingView>
-      </View>
-      <View style={styles.containerButton}>
-        <View style={styles.button}>
-          <Text style={styles.textButton}>Зареєструватися</Text>
+          {/* <View style={styles.containerButton}> */}
+          <View style={styles.button}>
+            <Text style={styles.textButton}>Зареєструватися</Text>
+          </View>
+          <Pressable>
+            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+          </Pressable>
         </View>
-        <Pressable>
-          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-        </Pressable>
-      </View>
-    </ImageBackground>
+        {/* </View> */}
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
   containerForm: {
     backgroundColor: "#fff",
     width: 375,
-    height: 359,
+    height: 549,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
