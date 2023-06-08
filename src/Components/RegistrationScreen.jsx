@@ -16,7 +16,7 @@ export const RegistrationScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1, justifyContent: "center" }}
     >
       <ImageBackground source={PhotoBG} style={styles.imageBG}>
         <View style={styles.containerForm}>
@@ -37,7 +37,6 @@ export const RegistrationScreen = () => {
               <Text style={styles.textInput}>Показати</Text>
             </Pressable>
           </View>
-          {/* <View style={styles.containerButton}> */}
           <View style={styles.button}>
             <Text style={styles.textButton}>Зареєструватися</Text>
           </View>
@@ -45,7 +44,6 @@ export const RegistrationScreen = () => {
             <Text style={styles.text}>Вже є акаунт? Увійти</Text>
           </Pressable>
         </View>
-        {/* </View> */}
       </ImageBackground>
     </KeyboardAvoidingView>
   );
@@ -60,14 +58,14 @@ const styles = StyleSheet.create({
   },
   containerForm: {
     backgroundColor: "#fff",
-    width: 375,
+    width: "100%",
     height: 549,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     position: "relative",
     textAlign: "center",
-    padding: 16,
+    padding: 20,
   },
 
   image: {
@@ -76,13 +74,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     position: "absolute",
     top: -60,
-    left: 128,
+    left: 135,
     backgroundColor: "#F6F6F6",
   },
   icon: {
     position: "absolute",
     top: 21,
-    right: 115,
+    right: 122,
     color: "#FF6C00",
     fontSize: 25,
   },
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     marginBottom: 32,
   },
   input: {
-    width: 343,
+    width: 350,
     height: 50,
     backgroundColor: "#F6F6F6",
     borderRadius: 8,
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
   },
   button: {
-    width: 343,
+    width: 350,
     height: 51,
     backgroundColor: "#FF6C00",
     borderRadius: 100,
@@ -143,9 +141,8 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     textAlign: "center",
   },
-  containerButton: {
-    backgroundColor: "#fff",
-    width: 375,
-    paddingBottom: 42,
+  contentContainer: {
+    flex: 1,
+    justifyContent: "center",
   },
 });
