@@ -7,17 +7,20 @@ import {
   TextInput,
   Pressable,
   Button,
+  KeyboardAvoidingView,
 } from "react-native";
 import PhotoBG from "../PhotoBG.jpg";
 import Icon from "react-native-vector-icons/AntDesign";
 
 export const RegistrationScreen = () => {
   return (
-    <View style={styles.container}>
-      <ImageBackground source={PhotoBG} style={styles.imageBG}>
-        <View style={styles.containerForm}>
-          <Image style={styles.image}></Image>
-          <Icon style={styles.icon} name="pluscircleo" />
+    <ImageBackground source={PhotoBG} style={styles.imageBG}>
+      <View style={styles.containerForm}>
+        <Image style={styles.image}></Image>
+        <Icon style={styles.icon} name="pluscircleo" />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
           <Text style={styles.textHeader}>Реєстрація</Text>
           <TextInput style={styles.input} placeholder="Логін"></TextInput>
           <TextInput
@@ -33,32 +36,31 @@ export const RegistrationScreen = () => {
               <Text style={styles.textInput}>Показати</Text>
             </Pressable>
           </View>
-          <View style={styles.button}>
-            <Text style={styles.textButton}>Зареєструватися</Text>
-          </View>
-          <Pressable>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
-          </Pressable>
+        </KeyboardAvoidingView>
+      </View>
+      <View style={styles.containerButton}>
+        <View style={styles.button}>
+          <Text style={styles.textButton}>Зареєструватися</Text>
         </View>
-      </ImageBackground>
-    </View>
+        <Pressable>
+          <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+        </Pressable>
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   imageBG: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     width: null,
     height: null,
   },
   containerForm: {
     backgroundColor: "#fff",
     width: 375,
-    height: 549,
+    height: 359,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 16,
   },
+
   image: {
     width: 120,
     height: 120,
@@ -138,5 +141,10 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: "#1B4371",
     textAlign: "center",
+  },
+  containerButton: {
+    backgroundColor: "#fff",
+    width: 375,
+    paddingBottom: 42,
   },
 });
