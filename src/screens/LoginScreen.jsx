@@ -9,10 +9,10 @@ import {
   Button,
   KeyboardAvoidingView,
 } from "react-native";
-import PhotoBG from "../PhotoBG.jpg";
-import Icon from "react-native-vector-icons/AntDesign";
 
-export const RegistrationScreen = () => {
+import PhotoBG from "../PhotoBG.jpg";
+
+export const LoginScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -20,10 +20,7 @@ export const RegistrationScreen = () => {
     >
       <ImageBackground source={PhotoBG} style={styles.imageBG}>
         <View style={styles.containerForm}>
-          <Image style={styles.image}></Image>
-          <Icon style={styles.icon} name="pluscircleo" />
-          <Text style={styles.textHeader}>Реєстрація</Text>
-          <TextInput style={styles.input} placeholder="Логін"></TextInput>
+          <Text style={styles.textHeader}>Увійти</Text>
           <TextInput
             style={styles.input}
             placeholder="Адреса електронної пошти"
@@ -38,10 +35,10 @@ export const RegistrationScreen = () => {
             </Pressable>
           </View>
           <View style={styles.button}>
-            <Text style={styles.textButton}>Зареєструватися</Text>
+            <Text style={styles.textButton}>Увійти</Text>
           </View>
           <Pressable>
-            <Text style={styles.text}>Вже є акаунт? Увійти</Text>
+            <Text style={styles.text}>Немає акаунту? Зареєструватися</Text>
           </Pressable>
         </View>
       </ImageBackground>
@@ -59,37 +56,19 @@ const styles = StyleSheet.create({
   containerForm: {
     backgroundColor: "#fff",
     width: "100%",
-    height: 549,
+    height: 489,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    position: "relative",
     textAlign: "center",
     padding: 20,
-  },
-
-  image: {
-    width: 120,
-    height: 120,
-    borderRadius: 16,
-    position: "absolute",
-    top: -60,
-    left: 135,
-    backgroundColor: "#F6F6F6",
-  },
-  icon: {
-    position: "absolute",
-    top: 21,
-    right: 122,
-    color: "#FF6C00",
-    fontSize: 25,
   },
   textHeader: {
     fontWeight: 500,
     fontSize: 30,
     lineHeight: 35.16,
     color: "#212121",
-    marginTop: 92,
+    marginTop: 32,
     textAlign: "center",
     marginBottom: 32,
   },
@@ -140,9 +119,5 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: "#1B4371",
     textAlign: "center",
-  },
-  contentContainer: {
-    flex: 1,
-    justifyContent: "center",
   },
 });
