@@ -54,14 +54,15 @@ const styles = StyleSheet.create({
     height: null,
   },
   containerForm: {
+    flex: 0,
     backgroundColor: "#fff",
     width: "100%",
     height: 489,
     marginTop: "auto",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    textAlign: "center",
-    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
   textHeader: {
     fontWeight: 500,

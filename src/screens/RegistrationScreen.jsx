@@ -19,8 +19,9 @@ export const RegistrationScreen = () => {
     >
       <ImageBackground source={PhotoBG} style={styles.imageBG}>
         <View style={styles.containerForm}>
-          <Image style={styles.image}></Image>
-          <Icon style={styles.icon} name="pluscircleo" />
+          <ImageBackground style={styles.image}>
+            <Icon style={styles.icon} name="pluscircleo" />
+          </ImageBackground>
           <Text style={styles.textHeader}>Реєстрація</Text>
           <TextInput style={styles.input} placeholder="Логін"></TextInput>
           <TextInput
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
     height: null,
   },
   containerForm: {
+    flex: 0,
     backgroundColor: "#fff",
     width: "100%",
     height: 549,
@@ -63,8 +65,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     position: "relative",
-    textAlign: "center",
-    padding: 20,
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   image: {
@@ -73,13 +75,15 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     position: "absolute",
     top: -60,
-    left: 135,
+    left: "50%",
+    transform: [{ translateX: -50 }],
     backgroundColor: "#F6F6F6",
   },
   icon: {
     position: "absolute",
-    top: 21,
-    right: 122,
+    right: -12,
+    bottom: 14,
+    zIndex: 100,
     color: "#FF6C00",
     fontSize: 25,
   },

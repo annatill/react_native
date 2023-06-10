@@ -7,8 +7,8 @@ import { PostsScreen } from "./src/screens/PostsScreen";
 export default function App() {
   return (
     <RegistrationScreen />
-    // <LoginScreen />
     // <PostsScreen />
+    // <LoginScreen />
   );
 }
 
