@@ -11,7 +11,7 @@ import {
   Keyboard,
   Button,
 } from "react-native";
-import PhotoBG from "../PhotoBG.jpg";
+import PhotoBG from "../../assets/PhotoBG.jpg";
 import Icon from "react-native-vector-icons/AntDesign";
 
 import { useState } from "react";

@@ -1,7 +1,7 @@
 import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
-import Avatar from "../Avatar.jpg";
+import Avatar from "../../assets/Avatar.jpg";
 
 export const PostsScreen = () => {
   return (

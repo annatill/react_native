@@ -4,6 +4,7 @@ import IconSquare from "react-native-vector-icons/MaterialCommunityIcons";
 import IconHuman from "react-native-vector-icons/Ionicons";
 
 export const Footer = () => {
+  //если мы находимся на PostScreen, CreatePostsScreen, то на контейнер дать marginTop: "auto"
   return (
     <View style={styles.container}>
       <Pressable>
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderTopWidth: 1,
     borderTopColor: "#ccc",
-    marginTop: "auto",
+    // marginTop: "auto",
     paddingBottom: 34,
     paddingTop: 10,
   },

@@ -14,7 +14,7 @@ import {
 
 import { useState } from "react";
 
-import PhotoBG from "../PhotoBG.jpg";
+import PhotoBG from "../../assets/PhotoBG.jpg";
 
 export const LoginScreen = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
