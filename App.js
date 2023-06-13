@@ -3,19 +3,32 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { RegistrationScreen } from "./src/screens/RegistrationScreen";
 import { LoginScreen } from "./src/screens/LoginScreen";
-import { PostsScreen } from "./src/screens/PostsScreen";
-import { CreatePostsScreen } from "./src/screens/CreatePostsScreen";
 import { CommentsScreen } from "./src/screens/CommentsScreen";
-import { ProfileScreen } from "./src/screens/ProfileScreen";
+import { MapScreen } from "./src/screens/MapScreen";
+import { HomeScreen } from "./src/screens/HomeScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export default function App() {
+  const MainStack = createStackNavigator();
   return (
-    <RegistrationScreen />
-    // <PostsScreen />
-    // <LoginScreen />
-    // <CreatePostsScreen />
-    // <CommentsScreen />
-    // <ProfileScreen />
+    <NavigationContainer>
+      <MainStack.Navigator
+        initialRouteName="Login"
+        screenOptions={{ headerShown: false }}
+      >
+        <MainStack.Screen name="Registration" component={RegistrationScreen} />
+        <MainStack.Screen name="Login" component={LoginScreen} />
+
+        <MainStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        {/* <CommentsScreen />
+        <MapScreen /> */}
+      </MainStack.Navigator>
+    </NavigationContainer>
   );
 }
 

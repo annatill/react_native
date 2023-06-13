@@ -5,16 +5,13 @@ import {
   TextInput,
   ImageBackground,
   Pressable,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 
 import { Post } from "../components/Post";
-import { Footer } from "../components/Footer";
 import PhotoBG from "../../assets/PhotoBG.jpg";
 import Avatar from "../../assets/AvatarProfile.jpg";
 import Icon from "react-native-vector-icons/EvilIcons";
+import IconLogOut from "react-native-vector-icons/MaterialIcons";
 
 export const ProfileScreen = () => {
   return (
@@ -40,10 +37,10 @@ export const ProfileScreen = () => {
             </Text>
           </View>
         </View>
+        <IconLogOut name="logout" style={styles.iconLogOut} size={24} />
         <Text style={styles.text}>Natali Romanova</Text>
         <Post />
       </View>
-      <Footer />
     </ImageBackground>
   );
 };
@@ -95,6 +92,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#BDBDBD",
     borderWidth: 1,
+  },
+  iconLogOut: {
+    position: "absolute",
+    right: 16,
+    top: 22,
+    color: "#BDBDBD",
   },
   text: {
     fontWeight: 500,

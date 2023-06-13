@@ -6,13 +6,14 @@ import {
   Image,
   TextInput,
   Pressable,
-  Button,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
 
 import { useState } from "react";
+import Icon from "react-native-vector-icons/AntDesign";
+import { useNavigation } from "@react-navigation/native";
 
 import PhotoBG from "../../assets/PhotoBG.jpg";
 
@@ -21,6 +22,8 @@ export const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+
+  const navigation = useNavigation();
 
   const handleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
@@ -32,6 +35,7 @@ export const LoginScreen = () => {
 
     setEmail("");
     setPassword("");
+    navigation.navigate("Home");
   };
 
   const handleInputFocus = (inputName) => {
@@ -84,7 +88,7 @@ export const LoginScreen = () => {
                 <Text style={styles.textButton}>Увійти</Text>
               </View>
             </Pressable>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate("Registration")}>
               <Text style={styles.text}>Немає акаунту? Зареєструватися</Text>
             </Pressable>
           </View>

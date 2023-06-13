@@ -1,6 +1,5 @@
 import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import Avatar from "../../assets/Avatar.jpg";
 
 export const PostsScreen = () => {
@@ -16,7 +15,6 @@ export const PostsScreen = () => {
           </View>
         </View>
       </View>
-      <Footer />
     </View>
   );
 };
@@ -24,7 +22,7 @@ export const PostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    minHeight: 812,
+    minHeight: 720,
     flexDirection: "flex-start",
     paddingHorizontal: 20,
     paddingTop: 32,

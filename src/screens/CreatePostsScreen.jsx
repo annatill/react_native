@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { Header } from "../components/Header";
-import { Footer } from "../components/Footer";
 import IconCamera from "react-native-vector-icons/FontAwesome";
 import IconLocation from "react-native-vector-icons/Ionicons";
 
@@ -72,7 +71,6 @@ export const CreatePostsScreen = () => {
               </Pressable>
             </View>
           </View>
-          <Footer />
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
@@ -82,10 +80,10 @@ export const CreatePostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    minHeight: 812,
+    minHeight: 790,
     flexDirection: "flex-start",
     paddingHorizontal: 20,
-    paddingTop: 32,
+    paddingTop: 44,
     backgroundColor: "#fff",
   },
   image: {
