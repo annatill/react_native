@@ -12,6 +12,7 @@ import {
 import { Header } from "../components/Header";
 import IconCamera from "react-native-vector-icons/FontAwesome";
 import IconLocation from "react-native-vector-icons/Ionicons";
+import IconTrash from "react-native-vector-icons/Feather";
 
 export const CreatePostsScreen = () => {
   return (
@@ -71,6 +72,9 @@ export const CreatePostsScreen = () => {
               </Pressable>
             </View>
           </View>
+          <Pressable style={styles.iconTrash}>
+            <IconTrash name="trash-2" size={24} style={{ color: "#BDBDBD" }} />
+          </Pressable>
         </View>
       </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
@@ -80,10 +84,10 @@ export const CreatePostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    minHeight: 790,
+    minHeight: 840,
     flexDirection: "flex-start",
     paddingHorizontal: 20,
-    paddingTop: 44,
+    paddingTop: 32,
     backgroundColor: "#fff",
   },
   image: {
@@ -143,5 +147,19 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     color: "#BDBDBD",
+  },
+
+  iconTrash: {
+    backgroundColor: "#F6F6F6",
+    marginTop: "auto",
+    width: 70,
+    height: 40,
+    marginBottom: 34,
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
   },
 });

@@ -94,6 +94,9 @@ export const HomeScreen = () => {
         options={{
           headerShown: false,
           tabBarShowLabel: false,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
       <Tabs.Screen

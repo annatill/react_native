@@ -1,14 +1,40 @@
 import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
+import IconBack from "react-native-vector-icons/Ionicons";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export const Header = (props) => {
   const { pageTitle } = props;
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const handleBack = () => {
+    if (route.name === "CreatePosts" || route.name === "Comments") {
+      navigation.navigate("Posts");
+    }
+  };
+
+  const renderIcon = () => {
+    if (route.name === "Posts") {
+      return <Icon name="logout" style={styles.icon} size={24} />;
+    } else if (route.name === "CreatePosts" || route.name === "Comments") {
+      return (
+        <IconBack
+          name="ios-return-down-back-sharp"
+          style={styles.iconBack}
+          size={24}
+          onPress={handleBack}
+        />
+      );
+    }
+  };
+
   return (
     <>
       <View style={styles.container}>
         <Text style={styles.text}>{pageTitle}</Text>
       </View>
-      <Icon name="logout" style={styles.icon} size={24} />
+      {renderIcon()}
     </>
   );
 };
@@ -38,5 +64,11 @@ const styles = StyleSheet.create({
     right: 20,
     top: 42,
     color: "#BDBDBD",
+  },
+  iconBack: {
+    position: "absolute",
+    left: 20,
+    top: 42,
+    color: "#212121cc",
   },
 });
