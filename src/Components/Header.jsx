@@ -9,7 +9,11 @@ export const Header = (props) => {
   const navigation = useNavigation();
 
   const handleBack = () => {
-    if (route.name === "CreatePosts" || route.name === "Comments") {
+    if (
+      route.name === "CreatePosts" ||
+      route.name === "Comments" ||
+      route.name === "Map"
+    ) {
       navigation.navigate("Posts");
     }
   };
@@ -17,10 +21,14 @@ export const Header = (props) => {
   const renderIcon = () => {
     if (route.name === "Posts") {
       return <Icon name="logout" style={styles.icon} size={24} />;
-    } else if (route.name === "CreatePosts" || route.name === "Comments") {
+    } else if (
+      route.name === "CreatePosts" ||
+      route.name === "Comments" ||
+      route.name === "Map"
+    ) {
       return (
         <IconBack
-          name="ios-return-down-back-sharp"
+          name="arrow-back"
           style={styles.iconBack}
           size={24}
           onPress={handleBack}

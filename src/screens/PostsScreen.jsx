@@ -1,8 +1,13 @@
 import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";
 import { Header } from "../components/Header";
 import Avatar from "../../assets/Avatar.jpg";
+import { Post } from "../components/Post";
+import { useRoute } from "@react-navigation/native";
 
 export const PostsScreen = () => {
+  const route = useRoute();
+  const { post } = route.params;
+
   return (
     <View style={styles.container}>
       <Header pageTitle="Публікації" />
@@ -14,6 +19,7 @@ export const PostsScreen = () => {
             <Text>email@example.com</Text>
           </View>
         </View>
+        {post && <Post post={post} />}
       </View>
     </View>
   );

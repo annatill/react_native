@@ -12,8 +12,14 @@ import PhotoBG from "../../assets/PhotoBG.jpg";
 import Avatar from "../../assets/AvatarProfile.jpg";
 import Icon from "react-native-vector-icons/EvilIcons";
 import IconLogOut from "react-native-vector-icons/MaterialIcons";
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { useRoute } from "@react-navigation/native";
 
 export const ProfileScreen = () => {
+  // const route = useRoute();
+  // const { post } = route.params;
+
   return (
     <ImageBackground source={PhotoBG} style={styles.imageBg}>
       <View style={styles.container}>
@@ -39,7 +45,7 @@ export const ProfileScreen = () => {
         </View>
         <IconLogOut name="logout" style={styles.iconLogOut} size={24} />
         <Text style={styles.text}>Natali Romanova</Text>
-        <Post />
+        {/* {post && <Post post={post} />} */}
       </View>
     </ImageBackground>
   );

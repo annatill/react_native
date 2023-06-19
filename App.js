@@ -25,8 +25,18 @@ export default function App() {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        {/* <CommentsScreen />
-        <MapScreen /> */}
+        <MainStack.Screen
+          name="Comments"
+          component={CommentsScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="Map"
+          component={MapScreen}
+          options={{
+            headerShown: false,
+          }}
+        />
       </MainStack.Navigator>
     </NavigationContainer>
   );

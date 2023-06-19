@@ -1,14 +1,44 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
+import MapView, { Marker } from "react-native-maps";
+import { Header } from "../components/Header";
+import { useRoute } from "@react-navigation/native";
 
 export const MapScreen = () => {
-  return <View style={styles.container}></View>;
+  const route = useRoute();
+  const { geoLocation } = route.params.post;
+  console.log(geoLocation);
+  return (
+    <View style={styles.container}>
+      <Header pageTitle="Карта" />
+      <MapView
+        style={styles.map}
+        initialRegion={{
+          // latitude: 50.450001,
+          // longitude: 30.523333,
+          latitude: geoLocation.latitude,
+          longitude: geoLocation.longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421,
+        }}
+        mapType="standard"
+        // minZoomLevel={10}
+      >
+        <Marker coordinate={geoLocation} />
+      </MapView>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+    minHeight: 829,
+    paddingTop: 60,
+  },
+  map: {
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
   },
 });

@@ -88,7 +88,7 @@ export const CommentsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    minHeight: 812,
+    minHeight: 829,
     paddingHorizontal: 20,
     paddingTop: 32,
     paddingBottom: 20,
