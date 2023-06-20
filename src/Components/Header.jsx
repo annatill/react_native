@@ -20,7 +20,14 @@ export const Header = (props) => {
 
   const renderIcon = () => {
     if (route.name === "Posts") {
-      return <Icon name="logout" style={styles.icon} size={24} />;
+      return (
+        <Icon
+          name="logout"
+          style={styles.icon}
+          size={24}
+          onPress={() => navigation.navigate("Login")}
+        />
+      );
     } else if (
       route.name === "CreatePosts" ||
       route.name === "Comments" ||

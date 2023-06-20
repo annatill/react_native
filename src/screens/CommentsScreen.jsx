@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingTop: 32,
     paddingBottom: 20,
     backgroundColor: "#fff",
-    marginTop: "auto",
+    // marginTop: "auto",
   },
   image: {
     width: "100%",

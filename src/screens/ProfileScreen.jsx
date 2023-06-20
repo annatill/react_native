@@ -19,6 +19,7 @@ import { useRoute } from "@react-navigation/native";
 export const ProfileScreen = () => {
   // const route = useRoute();
   // const { post } = route.params;
+  const navigation = useNavigation();
 
   return (
     <ImageBackground source={PhotoBG} style={styles.imageBg}>
@@ -43,7 +44,12 @@ export const ProfileScreen = () => {
             </Text>
           </View>
         </View>
-        <IconLogOut name="logout" style={styles.iconLogOut} size={24} />
+        <IconLogOut
+          name="logout"
+          style={styles.iconLogOut}
+          size={24}
+          onPress={() => navigation.navigate("Login")}
+        />
         <Text style={styles.text}>Natali Romanova</Text>
         {/* {post && <Post post={post} />} */}
       </View>

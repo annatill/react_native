@@ -287,7 +287,12 @@ export const CreatePostsScreen = () => {
             </View>
           </View>
           <Pressable style={styles.iconTrash}>
-            <IconTrash name="trash-2" size={24} style={{ color: "#BDBDBD" }} />
+            <IconTrash
+              name="trash-2"
+              size={24}
+              style={{ color: "#BDBDBD" }}
+              onPress={resetForm}
+            />
           </Pressable>
         </View>
       </KeyboardAvoidingView>
