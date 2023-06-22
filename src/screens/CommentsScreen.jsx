@@ -39,7 +39,7 @@ export const CommentsScreen = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1, justifyContent: "center" }}
+        style={{ flex: 1, justifyContent: "flex-end" }}
       >
         <View style={styles.container}>
           <Header pageTitle="Коментарі" />
@@ -87,13 +87,12 @@ export const CommentsScreen = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    minHeight: 829,
+    flex: 1,
+    minHeight: 812,
     paddingHorizontal: 20,
     paddingTop: 32,
     paddingBottom: 20,
     backgroundColor: "#fff",
-    // marginTop: "auto",
   },
   image: {
     width: "100%",

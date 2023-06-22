@@ -12,8 +12,9 @@ import {
 import PhotoBG from "../../assets/PhotoBG.jpg";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-
-import { useState } from "react";
+// import { useDispatch } from "react-redux";
+// import { useState } from "react";
+// import { createUser } from "../redux/operations";
 
 export const RegistrationScreen = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -23,14 +24,13 @@ export const RegistrationScreen = () => {
   const [focusedInput, setFocusedInput] = useState(null);
 
   const navigation = useNavigation();
+  // const dispatch = useDispatch();
 
   const handleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
   const handleRegistration = () => {
-    console.log("Логін:", login);
-    console.log("Електронна пошта:", email);
-    console.log("Пароль:", password);
+    // dispatch(createUser({ login, email, password }));
     setLogin("");
     setEmail("");
     setPassword("");
