@@ -6,22 +6,18 @@ import { useRoute } from "@react-navigation/native";
 export const MapScreen = () => {
   const route = useRoute();
   const { geoLocation } = route.params.post;
-  console.log(geoLocation);
   return (
     <View style={styles.container}>
       <Header pageTitle="Карта" />
       <MapView
         style={styles.map}
         initialRegion={{
-          // latitude: 50.450001,
-          // longitude: 30.523333,
           latitude: geoLocation.latitude,
           longitude: geoLocation.longitude,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
         mapType="standard"
-        // minZoomLevel={10}
       >
         <Marker coordinate={geoLocation} />
       </MapView>

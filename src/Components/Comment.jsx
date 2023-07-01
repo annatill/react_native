@@ -4,38 +4,40 @@ import {
   Text,
   TextInput,
   ImageBackground,
-  Pressable,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 
-export const Comment = ({ isOwn, avatar, text, date }) => {
-  const containerStyle = {
-    flexDirection: isOwn ? "row" : "row-reverse",
-  };
+import moment from "moment";
+import "moment/locale/uk";
 
-  const imageStyle = {
-    marginRight: isOwn ? 16 : 0,
-    marginLeft: isOwn ? 0 : 16,
-  };
-
-  const textStyles = {
-    textAlign: isOwn ? "left" : "right",
-  };
-
-  const containerTextStyles = {
-    borderTopLeftRadius: isOwn ? 0 : 6,
-    borderTopRightRadius: isOwn ? 6 : 0,
-  };
-
+export const Comment = ({ avatar, text, date, index }) => {
   return (
     <View style={{ marginTop: 32 }}>
-      <View style={[styles.container, containerStyle]}>
-        <ImageBackground style={[styles.image, imageStyle]}></ImageBackground>
-        <View style={[styles.containerText, containerTextStyles]}>
-          <Text style={[styles.text, textStyles]}>{text}</Text>
-          <Text style={[styles.date, textStyles]}>{date}</Text>
+      <View
+        style={{
+          ...styles.container,
+          flexDirection: index % 2 === 0 ? "row" : "row-reverse",
+        }}
+      >
+        <ImageBackground
+          style={{
+            ...styles.image,
+            marginRight: index % 2 === 0 ? 16 : 0,
+            marginLeft: index % 2 === 0 ? 0 : 16,
+          }}
+        >
+          {avatar}
+        </ImageBackground>
+        <View
+          style={{
+            ...styles.containerText,
+            borderTopLeftRadius: index % 2 === 0 ? 0 : 6,
+            borderTopRightRadius: index % 2 === 0 ? 6 : 0,
+          }}
+        >
+          <Text style={styles.text}>{text}</Text>
+          <Text style={styles.date}>
+            {moment(date).locale("uk").format("DD MMMM, YYYY | HH:mm")}
+          </Text>
         </View>
       </View>
     </View>
@@ -58,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5F5",
     borderRadius: 6,
     padding: 16,
-    marginBottom: 24,
     width: 200,
   },
   text: {

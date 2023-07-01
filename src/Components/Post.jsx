@@ -1,22 +1,31 @@
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  Pressable,
-  ImageBackground,
-} from "react-native";
+import { View, StyleSheet, Image, Text, ImageBackground } from "react-native";
 import IconLike from "react-native-vector-icons/AntDesign"; //like2
 import IconComment from "react-native-vector-icons/FontAwesome"; //comment
 import IconLocation from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
+import { addLike, delPost } from "../redux/operations";
+import { useDispatch } from "react-redux";
 
 export const Post = ({ post }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleDelete = () => {
+    dispatch(delPost(post.id));
+  };
+
+  const handleLike = () => {
+    dispatch(addLike({ postId: post.id, email: post.email }));
+  };
+
   return (
-    <View style={{ width: "100%", marginBottom: 32 }}>
-      <ImageBackground source={{ uri: post.uri }} style={styles.image} />
-      <Text style={{ ...styles.text, marginTop: 8 }}>{post.name}</Text>
+    <View
+      style={[styles.container, "Profile" ? styles.profileContainer : null]}
+    >
+      <ImageBackground source={{ uri: post.url }} style={styles.image} />
+      <Text style={{ ...styles.text, marginTop: 8, marginLeft: 0 }}>
+        {post.name}
+      </Text>
       <View
         style={{
           flexDirection: "row",
@@ -42,13 +51,15 @@ export const Post = ({ post }) => {
             <IconComment
               name="comment"
               size={24}
-              style={{ color: "#FF6C00" }}
+              style={{
+                color: post.comments?.length > 0 ? "#FF6C00" : "#BDBDBD",
+              }}
               onPress={() => {
-                navigation.navigate("Comments");
+                navigation.navigate("Comments", { post });
               }}
             />
 
-            <Text style={styles.text}>0</Text>
+            <Text style={styles.text}>{post.comments?.length || 0}</Text>
           </View>
           <View
             style={{
@@ -57,8 +68,13 @@ export const Post = ({ post }) => {
               alignItems: "center",
             }}
           >
-            <IconLike name="like2" size={24} style={{ color: "#FF6C00" }} />
-            <Text style={styles.text}>0</Text>
+            <IconLike
+              name="like2"
+              size={24}
+              style={{ color: post.likes?.length > 0 ? "#FF6C00" : "#BDBDBD" }}
+              onPress={handleLike}
+            />
+            <Text style={styles.text}>{post.likes?.length ?? 0}</Text>
           </View>
         </View>
         <View
@@ -93,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#BDBDBD",
     borderRadius: 8,
     marginBottom: 8,
-    marginTop: 32,
+    overflow: "hidden",
   },
   text: {
     fontSize: 16,
@@ -102,5 +118,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     color: "#212121",
     marginLeft: 8,
+  },
+  profileContainer: {
+    width: 300,
+  },
+  container: {
+    width: "100%",
+    marginBottom: 32,
   },
 });

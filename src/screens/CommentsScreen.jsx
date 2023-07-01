@@ -7,82 +7,91 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { createComment } from "../redux/operations";
 import { Header } from "../components/Header";
 import { Comment } from "../components/Comment";
+import { useSelector } from "react-redux";
+import { getUser, getComments } from "../redux/selectors";
 import IconArrow from "react-native-vector-icons/AntDesign";
 
-export const CommentsScreen = () => {
-  const [comments, setComments] = useState([]);
+export const CommentsScreen = ({ route }) => {
   const [newComment, setNewComment] = useState("");
+  const { uri } = useSelector(getUser);
+  const comments = useSelector(getComments(route.params.post.id));
+  const dispatch = useDispatch();
+
+  const post = route.params.post;
 
   const handleAddComment = () => {
     if (newComment.trim() === "") {
       return;
     }
-
     const comment = {
-      //   avatar: currentUser.avatar,
+      uri: uri ?? null,
       text: newComment,
-      date: new Date().toLocaleDateString(),
+      date: new Date().getTime(),
     };
-
-    setComments((prevComments) => [...prevComments, comment]);
+    dispatch(createComment({ comment, postId: post.id }));
     setNewComment("");
     Keyboard.dismiss();
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1, justifyContent: "flex-end" }}
-      >
-        <View style={styles.container}>
-          <Header pageTitle="Коментарі" />
-          <View
-            style={{
-              marginTop: 32,
-              marginBottom: "auto",
-            }}
-          >
-            <ImageBackground style={styles.image}></ImageBackground>
-            {comments.map((comment, index) => (
-              <Comment
-                // isOwn={comment.owner.id === currentUser.id}
-                key={index}
-                // owner={comment.avatar}
-                text={comment.text}
-                date={comment.date}
-              />
-            ))}
-          </View>
-          <View style={styles.input}>
-            <TextInput
-              placeholder="Коментувати..."
-              placeholderTextColor="#BDBDBD"
-              value={newComment}
-              onChangeText={setNewComment}
-              //   onSubmitEditing={handleAddComment}
-            />
-            <Pressable onPress={handleAddComment}>
-              <View style={styles.icon}>
-                <IconArrow
-                  name="arrowup"
-                  size={14}
-                  style={{
-                    color: "#fff",
-                  }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, justifyContent: "flex-end" }}
+    >
+      <View style={styles.container}>
+        <Header pageTitle="Коментарі" />
+        <View
+          style={{
+            marginTop: 32,
+            marginBottom: "auto",
+          }}
+        >
+          <ScrollView style={{ marginBottom: 100, paddingHorizontal: 10 }}>
+            <ImageBackground
+              source={{ uri: post.url }}
+              style={styles.image}
+            ></ImageBackground>
+
+            {comments &&
+              comments.map((comment, index) => (
+                <Comment
+                  key={index}
+                  index={index}
+                  avatar={comment.uri}
+                  text={comment.text}
+                  date={comment.date}
                 />
-              </View>
-            </Pressable>
-          </View>
+              ))}
+          </ScrollView>
         </View>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+        <View style={styles.input}>
+          <TextInput
+            placeholder="Коментувати..."
+            placeholderTextColor="#BDBDBD"
+            value={newComment}
+            onChangeText={setNewComment}
+          />
+          <Pressable onPress={handleAddComment}>
+            <View style={styles.icon}>
+              <IconArrow
+                name="arrowup"
+                size={14}
+                style={{
+                  color: "#fff",
+                }}
+              />
+            </View>
+          </Pressable>
+        </View>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({
@@ -99,7 +108,7 @@ const styles = StyleSheet.create({
     height: 240,
     backgroundColor: "#bdbdbd",
     borderRadius: 8,
-    marginBottom: 32,
+    overflow: "hidden",
   },
   input: {
     width: "100%",

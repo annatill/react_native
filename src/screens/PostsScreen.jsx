@@ -1,25 +1,41 @@
-import { View, StyleSheet, Text, Image, Pressable, Button } from "react-native";
+import { View, StyleSheet, Text, Image, ScrollView } from "react-native";
 import { Header } from "../components/Header";
-import Avatar from "../../assets/Avatar.jpg";
+import Avatar from "../../assets/noAvatar.jpg";
 import { Post } from "../components/Post";
 import { useRoute } from "@react-navigation/native";
+import { getUser, getAllPosts } from "../redux/selectors";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { getPostsData } from "../redux/operations";
 
 export const PostsScreen = () => {
-  const route = useRoute();
-  const { post } = route.params;
+  const { login, email, uri } = useSelector(getUser);
+  const posts = useSelector(getAllPosts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getPostsData());
+  }, []);
 
   return (
     <View style={styles.container}>
       <Header pageTitle="Публікації" />
       <View style={{ marginTop: 32 }}>
         <View style={styles.userContainer}>
-          <Image source={Avatar} style={styles.image} />
+          {uri ? (
+            <Image source={{ uri: uri }} style={styles.image} />
+          ) : (
+            <Image source={Avatar} style={styles.image} />
+          )}
           <View>
-            <Text style={styles.userName}>Natali Romanova</Text>
-            <Text>email@example.com</Text>
+            <Text style={styles.userName}>{login}</Text>
+            <Text>{email}</Text>
           </View>
         </View>
-        {post && <Post post={post} />}
+        <ScrollView style={{ marginBottom: 100, paddingHorizontal: 10 }}>
+          {posts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))}
+        </ScrollView>
       </View>
     </View>
   );

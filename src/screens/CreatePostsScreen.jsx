@@ -21,8 +21,10 @@ import { useNavigation } from "@react-navigation/native";
 import { Camera } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import * as ImagePicker from "expo-image-picker";
-
-// let geoLocationPromise = null;
+import { useDispatch } from "react-redux";
+import { addPost } from "../redux/operations";
+import { useSelector } from "react-redux";
+import { getEmail } from "../redux/selectors";
 
 export const CreatePostsScreen = () => {
   const [location, setLocation] = useState("");
@@ -34,14 +36,15 @@ export const CreatePostsScreen = () => {
   const [cameraRef, setCameraRef] = useState(null);
   const [uri, setUri] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const email = useSelector(getEmail);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const requestLocationPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status === "granted") {
-        // setPermission(true);
         let location = await Location.getCurrentPositionAsync({});
         const coords = {
           latitude: location.coords.latitude,
@@ -52,68 +55,45 @@ export const CreatePostsScreen = () => {
       }
     };
     requestLocationPermission();
-
-    // geoLocationPromise = requestLocationPermission();
-    // console.log("geoLocationPromise", geoLocationPromise);
   }, []);
 
   useEffect(() => {
     (async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
       await MediaLibrary.requestPermissionsAsync();
-
       setHasPermission(status === "granted");
     })();
   }, []);
 
-  // useEffect(() => {
-  //   const keyboardDidShowListener = Keyboard.addListener(
-  //     "keyboardDidShow",
-  //     () => {
-  //       Keyboard.dismiss();
-  //     }
-  //   );
+  // const handleAddCamera = () => {
+  //   if (hasPermission === null) {
+  //     return <View />;
+  //   }
+  //   if (hasPermission === false) {
+  //     navigation.navigate("Home");
+  //   }
+  // };
 
-  //   return () => {
-  //     keyboardDidShowListener.remove();
-  //   };
-  // }, []);
-
-  // console.log("qwer", geoLocation);
-  //console.log("geoLocationPromise", geoLocationPromise);
-
-  const handleAddCamera = () => {
-    if (hasPermission === null) {
-      return <View />;
-    }
-    if (hasPermission === false) {
-      navigation.navigate("Home");
-    }
-  };
-
-  const handleAddLocation = () => {
-    if (!permission) {
-      navigation.navigate("Home");
-    }
-  };
+  // const handleAddLocation = () => {
+  //   if (!permission) {
+  //     navigation.navigate("Home");
+  //   }
+  // };
 
   const handleAddPost = async () => {
     if (name.trim() === "" || location.trim() === "") {
       return;
     }
-
-    //const coords = await geoLocationPromise;
-
     const post = {
       name: name.trim(),
       location: location.trim(),
-      // geoLocation: coords /* geoLocation ? geoLocation : null */,
-      geoLocation: geoLocation,
-      uri: uri,
+      geoLocation,
+      uri,
+      email,
     };
-    console.log("post", post);
-    handleAddCamera();
-    handleAddLocation();
+    // handleAddCamera();
+    // handleAddLocation();
+    dispatch(addPost(post));
     resetForm();
     navigation.navigate("Home", {
       screen: "Posts",
@@ -126,10 +106,9 @@ export const CreatePostsScreen = () => {
     setLocation("");
     setUri(null);
     setSelectedImage(null);
-    // setGeoLocation(null);
   };
 
-  const isFormValid = name.trim() !== "" && location.trim() !== "";
+  const isFormValid = name.trim() !== "" && location.trim() !== "" && uri;
 
   const onPhoto = async () => {
     if (cameraRef) {
@@ -302,7 +281,7 @@ export const CreatePostsScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
+    flex: 1,
     minHeight: 829,
     flexDirection: "flex-start",
     paddingHorizontal: 20,

@@ -3,7 +3,6 @@ import {
   ImageBackground,
   StyleSheet,
   Text,
-  Image,
   TextInput,
   Pressable,
   KeyboardAvoidingView,
@@ -11,31 +10,51 @@ import {
   Keyboard,
 } from "react-native";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-
 import PhotoBG from "../../assets/PhotoBG.jpg";
+import { useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { getUserData } from "../firebase/firestore";
+import { setCurrentUser } from "../redux/slice";
+import { loginUser } from "../redux/operations";
+import { auth } from "../firebase/config";
 
 export const LoginScreen = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+  const [isAuth, setIsAuth] = useState(false);
 
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const uid = user.uid;
+        const data = await getUserData(uid);
+        dispatch(setCurrentUser({ ...data, uid }));
+        setIsAuth(true);
+        navigation.navigate("Home");
+      } else {
+        setIsAuth(false);
+      }
+    });
+  }, []);
 
   const handleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
 
-  const handleRegistration = () => {
-    console.log("Електронна пошта:", email);
-    console.log("Пароль:", password);
+  const handleLogin = () => {
+    const user = { email, password };
+    dispatch(loginUser(user));
 
     setEmail("");
     setPassword("");
-    navigation.navigate("Home");
   };
 
   const handleInputFocus = (inputName) => {
@@ -83,7 +102,7 @@ export const LoginScreen = () => {
                 </Text>
               </Pressable>
             </View>
-            <Pressable onPress={handleRegistration}>
+            <Pressable onPress={handleLogin}>
               <View style={styles.button}>
                 <Text style={styles.textButton}>Увійти</Text>
               </View>

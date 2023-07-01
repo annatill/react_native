@@ -2,11 +2,15 @@ import { View, Text, StyleSheet } from "react-native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import IconBack from "react-native-vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { getAuth, signOut } from "firebase/auth";
+import { logoutUser } from "../redux/operations";
+import { useDispatch } from "react-redux";
 
 export const Header = (props) => {
   const { pageTitle } = props;
   const route = useRoute();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const handleBack = () => {
     if (
@@ -25,7 +29,10 @@ export const Header = (props) => {
           name="logout"
           style={styles.icon}
           size={24}
-          onPress={() => navigation.navigate("Login")}
+          onPress={() => {
+            dispatch(logoutUser());
+            navigation.navigate("Login");
+          }}
         />
       );
     } else if (

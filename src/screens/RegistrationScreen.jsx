@@ -8,13 +8,15 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
 } from "react-native";
 import PhotoBG from "../../assets/PhotoBG.jpg";
 import Icon from "react-native-vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
-// import { useDispatch } from "react-redux";
-// import { useState } from "react";
-// import { createUser } from "../redux/operations";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { createUser } from "../redux/operations";
+import * as ImagePicker from "expo-image-picker";
 
 export const RegistrationScreen = () => {
   const [isShowPassword, setIsShowPassword] = useState(false);
@@ -22,19 +24,18 @@ export const RegistrationScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focusedInput, setFocusedInput] = useState(null);
+  const [uri, setUri] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const navigation = useNavigation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleShowPassword = () => {
     setIsShowPassword(!isShowPassword);
   };
   const handleRegistration = () => {
-    // dispatch(createUser({ login, email, password }));
-    setLogin("");
-    setEmail("");
-    setPassword("");
-    navigation.navigate("Posts");
+    const user = { login, email, password, uri: selectedImage };
+    dispatch(createUser(user));
   };
 
   const handleInputFocus = (inputName) => {
@@ -45,6 +46,22 @@ export const RegistrationScreen = () => {
     setFocusedInput(null);
   };
 
+  const handleSelectImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setSelectedImage(result.uri);
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -53,9 +70,46 @@ export const RegistrationScreen = () => {
       >
         <ImageBackground source={PhotoBG} style={styles.imageBG}>
           <View style={styles.containerForm}>
-            <ImageBackground style={styles.image}>
-              <Icon style={styles.icon} name="pluscircleo" />
-            </ImageBackground>
+            {selectedImage ? (
+              <View style={styles.image}>
+                <View style={{ borderRadius: 16, overflow: "hidden" }}>
+                  <ImageBackground
+                    source={{ uri: selectedImage }}
+                    style={styles.imageBackground}
+                  ></ImageBackground>
+                </View>
+                <View style={styles.iconContainer}>
+                  <Pressable
+                    style={styles.overlay}
+                    onPress={() => setSelectedImage(null)}
+                  >
+                    <Text
+                      style={{
+                        color: "#BDBDBD",
+                        fontSize: 17,
+                        fontWeight: 300,
+                        textAlign: "center",
+                        textAlignVertical: "center",
+                        transform: [{ rotate: "45deg" }],
+                      }}
+                    >
+                      +
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+            ) : (
+              <View style={styles.image}>
+                <Icon
+                  style={styles.icon}
+                  name="pluscircleo"
+                  onPress={() => {
+                    handleSelectImage();
+                  }}
+                />
+              </View>
+            )}
+
             <Text style={styles.textHeader}>Реєстрація</Text>
             <TextInput
               style={[styles.input, focusedInput === "login" && styles.focus]}
@@ -109,6 +163,17 @@ export const RegistrationScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 16,
+    backgroundColor: "#fff",
+  },
   imageBG: {
     flex: 1,
     justifyContent: "flex-end",
@@ -138,6 +203,10 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -50 }],
     backgroundColor: "#F6F6F6",
   },
+  imageBackground: {
+    width: 120,
+    height: 120,
+  },
   icon: {
     position: "absolute",
     right: -12,
@@ -145,6 +214,19 @@ const styles = StyleSheet.create({
     zIndex: 100,
     color: "#FF6C00",
     fontSize: 25,
+  },
+  iconContainer: {
+    position: "absolute",
+    right: -12,
+    bottom: 14,
+    backgroundColor: "#fff",
+    borderRadius: 100,
+    width: 24,
+    height: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    borderColor: "#BDBDBD",
+    borderWidth: 1,
   },
   textHeader: {
     fontWeight: 500,
